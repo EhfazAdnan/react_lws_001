@@ -5,17 +5,26 @@ import React from 'react';
 
 // class components
 class Clock extends React.Component {
-    constructor(props) {
-        super(props);
-        this.state = { date: new Date() };
-    }
+    // constructor(props) {
+    //     super(props);
+    //     this.state = { date: new Date() };
+    // }
+
+    // short cut way if props value not use when initialize state
+    state = { date: new Date() };
 
     componentDidMount() {
-        setInterval(() => {
-            this.setState({
-                date: new Date(),
-            });
-        }, 1000);
+        this.clockTimer = setInterval(() => this.tick(), 1000);
+    }
+
+    componentWillUnmount() {
+        clearInterval(this.clockTimer);
+    }
+
+    tick() {
+        this.setState({
+            date: new Date(),
+        });
     }
 
     render() {
