@@ -3,22 +3,24 @@ import React from 'react';
 
 class Button extends React.Component {
     shouldComponentUpdate(nextProps) {
-        const { change: currentChange } = this.props;
-        const { change: nextChange } = nextProps;
+        const { change: currentChange, locale: currentLocale } = this.props;
+        const { change: nextChange, locale: nextLocale } = nextProps;
 
-        if (currentChange === nextChange) {
+        if (currentChange === nextChange && nextLocale === currentLocale) {
             return false;
         }
         return true;
     }
 
     render() {
-        console.log('Button rendered');
-        const { change, locale } = this.props;
+        const { change, locale, show } = this.props;
         return (
-            <button type="button" onClick={() => change(locale)}>
-                Click Here
-            </button>
+            <>
+                <button type="button" onClick={() => change(locale)}>
+                    {locale === 'bn-BD' ? 'Change To Bangla' : 'Move To English'}
+                </button>
+                {show && <p>Change To Bangla is True</p>}
+            </>
         );
     }
 }
