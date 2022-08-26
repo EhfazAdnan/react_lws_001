@@ -7,6 +7,7 @@ export default class Form extends React.Component {
         title: 'JavaScript',
         textarea: 'JavaScript Text Area',
         selectValue: 'React',
+        checkBox: true,
     };
 
     handleChange = (e) => {
@@ -22,15 +23,25 @@ export default class Form extends React.Component {
             this.setState({
                 selectValue: e.target.value,
             });
+        } else if (e.target.type === 'checkbox') {
+            this.setState({
+                checkBox: e.target.checked,
+            });
         }
     };
 
+    submitHandler = (e) => {
+        const { title, textarea, selectValue, checkBox } = this.state;
+        e.preventDefault();
+        console.log(title, textarea, selectValue, checkBox);
+    };
+
     render() {
-        const { title, textarea, selectValue } = this.state;
+        const { title, textarea, selectValue, checkBox } = this.state;
         return (
             <div>
                 <br />
-                <form>
+                <form onSubmit={this.submitHandler}>
                     <input
                         type="text"
                         placeholder="Enter Title"
@@ -50,6 +61,12 @@ export default class Form extends React.Component {
                         <option value="Angular">Angular</option>
                     </select>
                     <p>{selectValue}</p>
+                    <br />
+                    <br />
+                    <input type="checkbox" checked={checkBox} onChange={this.handleChange} />
+                    <p>{checkBox ? 'true' : 'false'}</p>
+
+                    <input type="submit" value="Submit" />
                 </form>
             </div>
         );
